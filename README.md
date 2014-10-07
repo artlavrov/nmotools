@@ -12,16 +12,17 @@ nmotools
 * int date, crc, plugin1, plugin2, flags;
 * int compcsz, objcsz, objsz, addpath;
 * int componentsCount, objectsCount, zero, version, componentsSize
-* if componentsSize!=compcsz, next compczs bytes are compressed (zlib)
-* if objcsz!=objsz, next objcsz bytes are compressed (zlib)
 
-2) Components (may be compressed)
+2) Components
 
-* object header:
+if componentsSize!=compcsz, next compczs bytes are compressed (zlib)
+
 * int id, componentType, offset, nameLength
 * string name (nameLength bytes)
 
 3) Objects
+
+if objcsz!=objsz, next objcsz bytes are compressed (zlib)
 
 To be continued.
 
