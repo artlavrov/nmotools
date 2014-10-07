@@ -9,15 +9,15 @@ nmotools
 1) 64-byte header, including "Nemo Fi" signature:
 
 * string "Nemo Fi"\0 (8 bytes)
-* int date, crc, plugin1, plugin2, flags;
-* int compcsz, objcsz, objsz, addpath;
-* int componentsCount, objectsCount, zero, version, componentsSize
+* int32 date, crc, plugin1, plugin2, flags
+* int32 compcsz, objcsz, objsz, addpath
+* int32 componentsCount, objectsCount, zero, version, componentsSize
 
 2) Components
 
 if componentsSize!=compcsz, next compczs bytes are compressed (zlib)
 
-* int id, componentType, offset, nameLength
+* int32 id, componentType, offset, nameLength
 * string name (nameLength bytes)
 
 3) Objects
