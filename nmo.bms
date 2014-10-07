@@ -11,22 +11,22 @@ if SIG != "Nemo Fi"
 	cleanexit
 endif
 
-get C_DATE		long
-get C_CRC		long
-get C_PLUGIN1	long
-get C_PLUGIN2	long
-get C_FLAGS		long
+get C_DATE long
+get C_CRC long
+get C_PLUGIN1 long
+get C_PLUGIN2 long
+get C_FLAGS long
 
-get C_COMPCSZ	long
-get C_OBJCSZ	long
-get C_OBJSZ		long
-get C_ADDPATH	long
+get C_COMPCSZ long
+get C_OBJCSZ long
+get C_OBJSZ long
+get C_ADDPATH long
 
-get C_COMPCOUNT	long
-get C_OBJCOUNT	long
-get C_ZERO		long
-get C_VERSION	long
-get C_COMPSIZE	long
+get C_COMPCOUNT long
+get C_OBJCOUNT long
+get C_ZERO long
+get C_VERSION long
+get C_COMPSIZE long
 
 comtype zlib
 set OFFSET 64
