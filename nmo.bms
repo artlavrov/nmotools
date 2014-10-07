@@ -1,0 +1,57 @@
+# 3DVia .nmo assets extractor 0.1 by artlavrov
+# script for QuickBMS http://quickbms.aluigi.org
+
+# .nmo file format
+#
+# 64-byte header, including "Nemo Fi" signature:
+#
+# string "Nemo Fi"\0 (8 bytes)
+# 14 32-bit integers (54 bytes):
+# int date, crc, plugin1, plugin2, flags;
+# int compcsz, objcsz, objsz, addpath;
+# int componentsCount, objectsCount, zero, version, componentsSize
+# if componentsSize!=compcsz, next compczs bytes are compressed (zlib)
+# if objcsz!=objsz, next objcsz bytes are compressed (zlib)
+
+# components:
+
+# object header:
+# int id, componentType, offset, nameLength
+# string name (nameLength bytes)
+
+# to be continued.
+# (see https://github.com/yesterday/Syberia for details)
+
+endian little
+
+# determine format
+getct SIG string 0
+
+if SIG != "Nemo Fi"
+	print "Not an .nmo file"
+	cleanexit
+endif
+
+get C_DATE		long
+get C_CRC		long
+get C_PLUGIN1	long
+get C_PLUGIN2	long
+get C_FLAGS		long
+
+get C_COMPCSZ	long
+get C_OBJCSZ	long
+get C_OBJSZ		long
+get C_ADDPATH	long
+
+get C_COMPCOUNT	long
+get C_OBJCOUNT	long
+get C_ZERO		long
+get C_VERSION	long
+get C_COMPSIZE	long
+
+comtype zlib
+set OFFSET 64
+clog "components" OFFSET C_COMPCSZ C_COMPSIZE
+math OFFSET += C_COMPCSZ
+clog "objects" OFFSET C_OBJCSZ C_OBJSZ
+
