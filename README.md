@@ -8,7 +8,7 @@ nmotools
 
 1) 64-byte header, including "Nemo Fi" signature:
 
-* string "Nemo Fi" (8 bytes)
+* 8 bytes, string "Nemo Fi"
 * int32 date, crc, plugin1, plugin2, flags
 * int32 compcsz, objcsz, objsz, addpath
 * int32 componentsCount, objectsCount, zero, version, componentsSize
