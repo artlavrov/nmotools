@@ -31,11 +31,11 @@ get C_COMPSIZE long
 comtype zlib
 
 set OFFSET 64
-#clog "components" OFFSET C_COMPCSZ C_COMPSIZE
+clog "components" OFFSET C_COMPCSZ C_COMPSIZE
 clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSIZE
 
 math OFFSET += C_COMPCSZ
-#clog "objects" OFFSET C_OBJCSZ C_OBJSZ
+clog "objects" OFFSET C_OBJCSZ C_OBJSZ
 clog MEMORY_FILE2 OFFSET C_OBJCSZ C_OBJSZ
 
 print "objectsCount %C_OBJCOUNT%"
@@ -70,10 +70,14 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "GROUP"
 	elif C_TYPE == 31
 		set TYPE string "TEXTURE"
+	elif C_TYPE == 33
+		set TYPE string "ENTITY_3D"
 	elif C_TYPE == 45
 		set TYPE string "PARAMETERLOCAL"
 	elif C_TYPE == 48
 		set TYPE string "INTERFACEOBJECTMANAGER"
+	elif C_TYPE == 52
+		set TYPE string "DATAARRAY"
 	endif
 
 	set FILE_NAME string "components/"
@@ -82,8 +86,7 @@ for i = 0 < C_COMPCOUNT
 #	string FILE_NAME += C_NAME
 #	string FILE_NAME R= " " "_"
 
-#	print "%i%) id:%C_ID% type: %C_TYPE% ofs: %C_OFS% %C_NAMELEN% %C_NAME%"
-	print "%i%: %C_OFS% %TYPE% %C_NAME%"
+	print "%i%) id: %C_ID% type: %C_TYPE% ofs: %C_OFS% name:'%C_NAME%'"
 
 #	set OFFSET lastOffset
 #	set SIZE C_OFS
