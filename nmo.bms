@@ -29,8 +29,33 @@ get C_VERSION long
 get C_COMPSIZE long
 
 comtype zlib
+
 set OFFSET 64
 clog "components" OFFSET C_COMPCSZ C_COMPSIZE
+clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSIZE
+
 math OFFSET += C_COMPCSZ
 clog "objects" OFFSET C_OBJCSZ C_OBJSZ
+clog MEMORY_FILE2 OFFSET C_OBJCSZ C_OBJSZ
 
+print "componentsCount %C_COMPCOUNT%"
+
+set totalSize 0
+
+for i = 0 < C_COMPCOUNT
+
+	get C_ID long MEMORY_FILE1
+	get C_TYPE long MEMORY_FILE1
+	get C_OFS long MEMORY_FILE1
+	get C_NAMELEN long MEMORY_FILE1
+	getdstring C_NAME C_NAMELEN MEMORY_FILE1
+	print "%i%) id:%C_ID% type: %C_TYPE% ofs: %C_OFS% %C_NAMELEN% %C_NAME%"
+
+	set FILE_NAME string "components/"
+	string FILE_NAME += i
+	string FILE_NAME += "_"
+	string FILE_NAME += C_NAME
+	string FILE_NAME R= " " "_"
+#	print "%FILE_NAME%"
+
+	next i
