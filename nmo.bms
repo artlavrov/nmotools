@@ -31,16 +31,18 @@ get C_COMPSIZE long
 comtype zlib
 
 set OFFSET 64
-clog "components" OFFSET C_COMPCSZ C_COMPSIZE
+#clog "components" OFFSET C_COMPCSZ C_COMPSIZE
 clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSIZE
 
 math OFFSET += C_COMPCSZ
-clog "objects" OFFSET C_OBJCSZ C_OBJSZ
+#clog "objects" OFFSET C_OBJCSZ C_OBJSZ
 clog MEMORY_FILE2 OFFSET C_OBJCSZ C_OBJSZ
 
+print "objectsCount %C_OBJCOUNT%"
 print "componentsCount %C_COMPCOUNT%"
 
-set totalSize 0
+set lastOffset 0
+set OFFSET 0
 
 for i = 0 < C_COMPCOUNT
 
@@ -49,13 +51,45 @@ for i = 0 < C_COMPCOUNT
 	get C_OFS long MEMORY_FILE1
 	get C_NAMELEN long MEMORY_FILE1
 	getdstring C_NAME C_NAMELEN MEMORY_FILE1
-	print "%i%) id:%C_ID% type: %C_TYPE% ofs: %C_OFS% %C_NAMELEN% %C_NAME%"
+
+	set TYPE C_TYPE
+
+	if C_TYPE == 1
+		set TYPE string "OBJECT"
+	elif C_TYPE == 2
+		set TYPE string "PARAMETERIN"
+	elif C_TYPE == 3
+		set TYPE string "PARAMETEROUT"
+	elif C_TYPE == 6
+		set TYPE string "BEHAVIORLINK"
+	elif C_TYPE == 8
+		set TYPE string "BEHAVIOR"
+	elif C_TYPE == 9
+		set TYPE string "BEHAVIORIO"
+	elif C_TYPE == 23
+		set TYPE string "GROUP"
+	elif C_TYPE == 31
+		set TYPE string "TEXTURE"
+	elif C_TYPE == 45
+		set TYPE string "PARAMETERLOCAL"
+	elif C_TYPE == 48
+		set TYPE string "INTERFACEOBJECTMANAGER"
+	endif
 
 	set FILE_NAME string "components/"
 	string FILE_NAME += i
-	string FILE_NAME += "_"
-	string FILE_NAME += C_NAME
-	string FILE_NAME R= " " "_"
-#	print "%FILE_NAME%"
+#	string FILE_NAME += "_"
+#	string FILE_NAME += C_NAME
+#	string FILE_NAME R= " " "_"
+
+#	print "%i%) id:%C_ID% type: %C_TYPE% ofs: %C_OFS% %C_NAMELEN% %C_NAME%"
+	print "%i%: %C_OFS% %TYPE% %C_NAME%"
+
+#	set OFFSET lastOffset
+#	set SIZE C_OFS
+#	math SIZE -= lastOffset
+#	log FILE_NAME OFFSET SIZE MEMORY_FILE2
+#	print "%FILE_NAME% %OFFSET% %SIZE%"
+#	set lastOffset C_OFS
 
 	next i
