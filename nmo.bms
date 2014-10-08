@@ -78,6 +78,8 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "INTERFACEOBJECTMANAGER"
 	elif C_TYPE == 52
 		set TYPE string "DATAARRAY"
+	else
+		set TYPE string "UNKNOWN"
 	endif
 
 	set FILE_NAME string "components/"
@@ -86,7 +88,7 @@ for i = 0 < C_COMPCOUNT
 #	string FILE_NAME += C_NAME
 #	string FILE_NAME R= " " "_"
 
-	print "%i%) id: %C_ID% type: %C_TYPE% ofs: %C_OFS% name:'%C_NAME%'"
+	print "%i%) id:%C_ID% type:%TYPE%(%C_TYPE%) ofs:%C_OFS% name:'%C_NAME%'"
 
 #	set OFFSET lastOffset
 #	set SIZE C_OFS
