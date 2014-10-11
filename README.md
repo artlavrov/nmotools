@@ -53,8 +53,8 @@ Texture object (31)
 -------------------
 
 * Bytes 0..43: 11 int32 fields - length, tag, classID, version, dataSizeInWords0, unk0, dataSizeInWords1, unk1, BPP (number of planes is BPP/8), width, height
-* Bytes 44..44+planes*4: int32 planesBindes * planes
-* Bytes 44+planes*4..length: colorPlanes * planes - int32 size, raw color plane bytes [width*height]
+* Bytes 44..44+4*planes: int32 planesBindes * planes
+* Bytes 44+4*planes..length: colorPlane (int32 size, width*height byte array) * planes
 
 See https://github.com/yesterday/Syberia for other objects.
 
