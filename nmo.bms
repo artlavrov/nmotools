@@ -28,7 +28,7 @@ get C_ZERO long
 get C_VERSION long
 get C_COMPSIZE long
 
-string TMP p= "crc: 0x%08x objectCount %d componentsCount %d" C_CRC C_OBJCOUNT C_COMPCOUNT
+string TMP p= "crc: 0x%08x objectCount: %d componentsCount: %d" C_CRC C_OBJCOUNT C_COMPCOUNT
 print "%TMP%"
 
 comtype zlib
@@ -49,10 +49,13 @@ else
 	log MEMORY_FILE2 OFFSET C_OBJSZ
 endif
 
-set lastOffset 0
-set OFFSET 0
-
 log MEMORY_FILE3 0 0
+
+set totalSize C_COMPSIZE
+math totalSize += 64
+set OFFSET 0
+string NAME p= "objects/%08d_0x%08x_%s(%d)" 0 0 "PARAMETEROPERATION" 0
+set TITLE = ""
 
 for i = 0 < C_COMPCOUNT
 
@@ -61,8 +64,6 @@ for i = 0 < C_COMPCOUNT
 	get C_OFS long MEMORY_FILE1
 	get C_NAMELEN long MEMORY_FILE1
 	getdstring C_NAME C_NAMELEN MEMORY_FILE1
-
-	set TYPE C_TYPE
 
 	if C_TYPE == 1
 		set TYPE string "OBJECT"
@@ -94,35 +95,33 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "UNKNOWN"
 	endif
 
-	set FILE_NAME string "components/"
-	string FILE_NAME += i
-#	string FILE_NAME += "_"
-#	string FILE_NAME += C_NAME
-#	string FILE_NAME R= " " "_"
+	set SIZE C_OFS
+	math SIZE -= totalSize
 
-	string TMP p= "%d 0x%08x %s(%d) \"%s\"" C_OFS C_ID TYPE C_TYPE C_NAME
-
+	string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
 	put TMP line MEMORY_FILE3
 
-#	print %TMP%
+	log NAME OFFSET SIZE MEMORY_FILE2
 
-#	print "%i%) ofs:%C_OFS% id:%ID% type:%TYPE%(%C_TYPE%) name:'%C_NAME%'"
+	string NAME p= "objects/%08d_0x%08x_%s(%d)" i C_ID TYPE C_TYPE
+	string TITLE p= "%s" C_NAME
 
-#	set OFFSET lastOffset
-#	set SIZE C_OFS
-#	math SIZE -= lastOffset
-#	log FILE_NAME OFFSET SIZE MEMORY_FILE2
-#	print "%FILE_NAME% %OFFSET% %SIZE%"
-#	set lastOffset C_OFS
+	math OFFSET += SIZE
+	math totalSize += SIZE
 
 	next i
 
-get SIZE asize MEMORY_FILE1
-log "components" 0 SIZE MEMORY_FILE1
+xmath SIZE "C_OBJSZ - C_OFS + C_COMPSIZE + 64"
+string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
+put TMP line MEMORY_FILE3
+log NAME OFFSET SIZE MEMORY_FILE2
 
-get SIZE asize MEMORY_FILE2
-log "objects" 0 SIZE MEMORY_FILE2
+#get SIZE asize MEMORY_FILE1
+#log "components.bin" 0 SIZE MEMORY_FILE1
+
+#get SIZE asize MEMORY_FILE2
+#log "objects.bin" 0 SIZE MEMORY_FILE2
 
 get SIZE asize MEMORY_FILE3
-log "list" 0 SIZE MEMORY_FILE3
+log "objects.txt" 0 SIZE MEMORY_FILE3
 
