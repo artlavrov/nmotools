@@ -31,18 +31,28 @@ get C_COMPSIZE long
 comtype zlib
 
 set OFFSET 64
-clog "components" OFFSET C_COMPCSZ C_COMPSIZE
-clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSIZE
+
+if C_COMPCSZ != C_COMPSIZE
+	clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSIZE
+else
+	log MEMORY_FILE1 OFFSET C_COMPSIZE
+endif
 
 math OFFSET += C_COMPCSZ
-clog "objects" OFFSET C_OBJCSZ C_OBJSZ
-clog MEMORY_FILE2 OFFSET C_OBJCSZ C_OBJSZ
+
+if C_OBJCSZ != C_OBJSZ
+	clog MEMORY_FILE2 OFFSET C_OBJCSZ C_OBJSZ
+else
+	log MEMORY_FILE2 OFFSET C_OBJSZ
+endif
 
 print "objectsCount %C_OBJCOUNT%"
 print "componentsCount %C_COMPCOUNT%"
 
 set lastOffset 0
 set OFFSET 0
+
+log MEMORY_FILE3 0 0
 
 for i = 0 < C_COMPCOUNT
 
@@ -66,6 +76,8 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "BEHAVIOR"
 	elif C_TYPE == 9
 		set TYPE string "BEHAVIORIO"
+	elif C_TYPE == 15
+		set TYPE string "OBJECTANIMATION"
 	elif C_TYPE == 23
 		set TYPE string "GROUP"
 	elif C_TYPE == 31
@@ -88,7 +100,13 @@ for i = 0 < C_COMPCOUNT
 #	string FILE_NAME += C_NAME
 #	string FILE_NAME R= " " "_"
 
-	print "%i%) id:%C_ID% type:%TYPE%(%C_TYPE%) ofs:%C_OFS% name:'%C_NAME%'"
+	string TMP p= "%d 0x%08x %s(%d) \"%s\"" C_OFS C_ID TYPE C_TYPE C_NAME
+
+	put TMP line MEMORY_FILE3
+
+#	print %TMP%
+
+#	print "%i%) ofs:%C_OFS% id:%ID% type:%TYPE%(%C_TYPE%) name:'%C_NAME%'"
 
 #	set OFFSET lastOffset
 #	set SIZE C_OFS
@@ -98,3 +116,13 @@ for i = 0 < C_COMPCOUNT
 #	set lastOffset C_OFS
 
 	next i
+
+get SIZE asize MEMORY_FILE1
+log "components" 0 SIZE MEMORY_FILE1
+
+get SIZE asize MEMORY_FILE2
+log "objects" 0 SIZE MEMORY_FILE2
+
+get SIZE asize MEMORY_FILE3
+log "list" 0 SIZE MEMORY_FILE3
+
