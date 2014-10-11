@@ -28,6 +28,9 @@ get C_ZERO long
 get C_VERSION long
 get C_COMPSIZE long
 
+string TMP p= "crc: 0x%08x objectCount %d componentsCount %d" C_CRC C_OBJCOUNT C_COMPCOUNT
+print "%TMP%"
+
 comtype zlib
 
 set OFFSET 64
@@ -45,9 +48,6 @@ if C_OBJCSZ != C_OBJSZ
 else
 	log MEMORY_FILE2 OFFSET C_OBJSZ
 endif
-
-print "objectsCount %C_OBJCOUNT%"
-print "componentsCount %C_COMPCOUNT%"
 
 set lastOffset 0
 set OFFSET 0
