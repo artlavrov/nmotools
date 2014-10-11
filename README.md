@@ -46,6 +46,6 @@ Object names and offsets are in the components record. Objects start from offset
 Object sizes are relative, excluding the first and the last records.
 The first object size is offset-componentsSize-HeaderSize.
 The last object size is objsz - offset + componentsSize + HeaderSize.
-The first object name is always "PARAMETEROPERATION", other component names are shifted by one.
+The first object name is always "PARAMETEROPERATION", other names are shifted by one.
 
 See https://github.com/yesterday/Syberia for textures and other object formats.
