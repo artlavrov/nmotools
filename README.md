@@ -11,7 +11,7 @@ The first 64 (HeaderSize) bytes contain the header
 * Bytes 0..7: "Nemo Fi" signature, including trailing zero
 * Bytes 8..63: 14 int32 fields - date, crc, plugin1, plugin2, flags, int32 compcsz, objcsz, objsz, addpath, int32 componentsCount, objectsCount, zero, version, componentsSize
 
-Directly after this data there is compcsz bytes of component records (componentsCount records). If componentsSize!=compcsz, those compczs bytes are zlib-compressed.
+Directly after this data there is compcsz bytes of component records (componentsCount records). If componentsSize != compcsz, those compczs bytes are zlib-compressed.
 
 Component record format
 -----------------------
@@ -38,7 +38,7 @@ COLLISIONMANAGER(84), OBJECTMANAGER(85), FLOORMANAGER(86), RENDERMANAGER(87),
 BEHAVIORMANAGER(88), INPUTMANAGER(89), PARAMETERMANAGER(90), GRIDMANAGER(91),
 SOUNDMANAGER(92), TIMEMANAGER(93), VIDEOMANAGER(94), CUIKBEHDATA(-1)
 
-Directly after this there is binary data containing objects. If objcsz!=objsz, next objcsz bytes are zlib-compressed.
+Directly after this there is binary data containing objects. If objcsz != objsz, next objcsz bytes are zlib-compressed.
 
 Object binary data format
 -------------------------
@@ -46,6 +46,6 @@ Object names and offsets are in the components record. Objects start from offset
 Object sizes are relative, excluding the first and the last records.
 The first object size is offset-componentsSize-HeaderSize.
 The last object size is objsz - offset + componentsSize + HeaderSize.
-The first object is always "PARAMETEROPERATION", component names are shifted backwards by one.
+The first object name is always "PARAMETEROPERATION", other component names are shifted by one.
 
 See https://github.com/yesterday/Syberia for textures and other object formats.
