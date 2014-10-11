@@ -17,7 +17,7 @@ Component record format
 -----------------------
 
 * Bytes 0..16: 4 int32 fields - id, componentType, offset, nameLength
-* Bytes 16..16+nameLength - string name (including trailing zero)
+* Bytes 16..16+nameLength: - string name (including trailing zero)
 
 Known component types are:
 
@@ -48,9 +48,12 @@ The first object size is offset-componentsSize-HeaderSize.
 The last object size is objsz - offset + componentsSize + HeaderSize.
 The first object name is always "PARAMETEROPERATION", other names are shifted by one.
 
-Texture object format
----------------------
+Texture object format (object id 31)
+------------------------------------
 
+* Bytes 0..43: 11 int32 fields - length, tag, classID, version, dataSizeInWords0, unk0, dataSizeInWords1, unk1, BPP, width, height
+* Bytes 44..44+BPP/8*4: int32 planesBindes[BPP/8]
+* Bytes 44+BPP/8*4..length: colorPlanes[BPP/8] (int32 size + raw color plane bytes [width*height])
 
+See https://github.com/yesterday/Syberia for other objects.
 
-See https://github.com/yesterday/Syberia for textures and other object formats.
