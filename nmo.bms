@@ -122,19 +122,17 @@ for i = 0 < C_COMPCOUNT
 				next p
 
 			# planar to RGBA conversion, really slow
-			set DX 0
-			for y = 0 < T_HEIGHT
-				for x = 0 < T_WIDTH
-					set OFS DX
-					for p = 0 < PLANES
-						goto OFS MEMORY_FILE5
-						get C byte MEMORY_FILE5
-						put C byte MEMORY_FILE4
-						math OFS += PLANE_SIZE
-						next p
-					math DX += 1
-					next x
-				next y
+			set CUR 0
+			for k = 0 < PLANE_SIZE
+				set OFS CUR
+				for p = 0 < PLANES
+					goto OFS MEMORY_FILE5
+					get C byte MEMORY_FILE5
+					put C byte MEMORY_FILE4
+					math OFS += PLANE_SIZE
+					next p
+				math CUR += 1
+				next k
 
 			get IMG_SIZE asize MEMORY_FILE4
 			log T_NAME 0 IMG_SIZE MEMORY_FILE4
