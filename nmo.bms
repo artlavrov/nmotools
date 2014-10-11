@@ -69,7 +69,7 @@ for i = 0 < C_COMPCOUNT
 	math SIZE -= totalSize
 
 	# write resource file
-	log NAME OFFSET SIZE MEMORY_FILE2
+#	log NAME OFFSET SIZE MEMORY_FILE2
 
 	if TYPE == "TEXTURE"
 		set T_OFS OFFSET
@@ -110,17 +110,28 @@ for i = 0 < C_COMPCOUNT
 			put T_BPP byte MEMORY_FILE4
 			put 0 byte MEMORY_FILE4
 
-			# supposed to convert planes to RGBA array, not implemented yet
+			log MEMORY_FILE5 0 0
 			for p = 0 < PLANES
 				get T_PSIZE long MEMORY_FILE2
 				xmath PLANE_SIZE "T_WIDTH * T_HEIGHT"
+				getdstring PLANE PLANE_SIZE MEMORY_FILE2
 
-				#getdstring PLANE PLANE_SIZE MEMORY_FILE2
-				#putdstring PLANE PLANE_SIZE MEMORY_FILE4
-
-				
-
+				# either save as separate planes, or convert to interleaved (see below)
+				putdstring PLANE PLANE_SIZE MEMORY_FILE4
+#				putdstring PLANE PLANE_SIZE MEMORY_FILE5
 				next p
+
+			# planar to interleaved conversion, really slow, commented out for a while
+#			for y = 0 < T_HEIGHT
+#				for x = 0 < T_WIDTH
+#					for p = 0 < PLANES
+#						xmath OFS "p * PLANE_SIZE + x + y*T_WIDTH"
+#						goto OFS MEMORY_FILE5
+#						get C byte MEMORY_FILE5
+#						put C byte MEMORY_FILE4
+#						next p
+#					next x
+#				next y
 
 			get IMG_SIZE asize MEMORY_FILE4
 			log T_NAME 0 IMG_SIZE MEMORY_FILE4
