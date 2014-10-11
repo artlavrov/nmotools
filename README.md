@@ -10,8 +10,11 @@ The first 64 (HeaderSize) bytes contain the header
 
 * Bytes 0..7: "Nemo Fi" signature, including trailing zero
 * Bytes 8..63: 14 int32 fields - date, crc, plugin1, plugin2, flags, int32 compcsz, objcsz, objsz, addpath, int32 componentsCount, objectsCount, zero, version, componentsSize
+* Bytes 64..64+compcsz: componentRecords[componentCount] (may be compressed)
+* Bytes 64+compcsz...64+compcsz+objcsz: objects binary data (may be compressed)
 
-Directly after this data there is compcsz bytes of component records (componentsCount records). If componentsSize != compcsz, those compczs bytes are zlib-compressed.
+In the end there is compcsz bytes of component records (componentsCount records). If componentsSize != compcsz, those compczs bytes are zlib-compressed.
+Directly after this there is binary data containing objects. If objcsz != objsz, next objcsz bytes are zlib-compressed.
 
 Component record format
 -----------------------
@@ -38,8 +41,6 @@ COLLISIONMANAGER(84), OBJECTMANAGER(85), FLOORMANAGER(86), RENDERMANAGER(87),
 BEHAVIORMANAGER(88), INPUTMANAGER(89), PARAMETERMANAGER(90), GRIDMANAGER(91),
 SOUNDMANAGER(92), TIMEMANAGER(93), VIDEOMANAGER(94), CUIKBEHDATA(-1)
 
-Directly after this there is binary data containing objects. If objcsz != objsz, next objcsz bytes are zlib-compressed.
-
 Object binary data format
 -------------------------
 Component records refer to offsets in the objects binary data. Objects always start from the offset 0, sizes should be calculated
@@ -47,8 +48,8 @@ using offset of the next record, except first and last ones: the first object si
 the last object size is objsz - offset + componentsSize + HeaderSize. The first object name is always "PARAMETEROPERATION",
 the second object name is in the first record and so on.
 
-TEXTURE(31)
------------
+Texture object (31)
+-------------------
 
 * Bytes 0..43: 11 int32 fields - length, tag, classID, version, dataSizeInWords0, unk0, dataSizeInWords1, unk1, BPP, width, height
 * Bytes 44..44+BPP/8*4: int32 planesBindes [BPP/8]
