@@ -42,11 +42,10 @@ Directly after this there is binary data containing objects. If objcsz != objsz,
 
 Object binary data format
 -------------------------
-Object names and offsets are in the components record. Objects start from offset 0.
-Object sizes are relative, excluding the first and the last records.
-The first object size is offset-componentsSize-HeaderSize.
-The last object size is objsz - offset + componentsSize + HeaderSize.
-The first object name is always "PARAMETEROPERATION", other names are shifted by one.
+Object names and offsets are situated in the components record. Objects always start from the offset 0.
+Object sizes should be calculated using offset of the next record, except first and last ones:
+the first object size is offset-componentsSize-HeaderSize, the last object size is objsz - offset + componentsSize + HeaderSize.
+The first object name is always "PARAMETEROPERATION", the second object name is in the first record and so on.
 
 Texture object format (object id 31)
 ------------------------------------
