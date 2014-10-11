@@ -45,8 +45,9 @@ Object binary data format
 -------------------------
 Component records refer to offsets in the objects binary data. Objects always start from the offset 0, sizes should be calculated
 using offset of the next record, except first and last ones: the first object size is offset - componentsSize - HeaderSize,
-the last object size is objsz - offset + componentsSize + HeaderSize. The first object name is always "PARAMETEROPERATION",
-the second object name is in the first record and so on.
+the last object size is objsz - offset + componentsSize + HeaderSize. First object is special, it has specific (calculated) size,
+offset and name ("PARAMETEROPERATION") and the name in the first component record is actually belongs to the second object in the list,
+so, all record names are off by one.
 
 Texture object (31)
 -------------------
