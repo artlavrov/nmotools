@@ -47,8 +47,8 @@ using offset of the next record, except first and last ones: the first object si
 the last object size is objsz - offset + componentsSize + HeaderSize. The first object name is always "PARAMETEROPERATION",
 the second object name is in the first record and so on.
 
-Texture object format (object id 31)
-------------------------------------
+TEXTURE(31)
+-----------
 
 * Bytes 0..43: 11 int32 fields - length, tag, classID, version, dataSizeInWords0, unk0, dataSizeInWords1, unk1, BPP, width, height
 * Bytes 44..44+BPP/8*4: int32 planesBindes [BPP/8]

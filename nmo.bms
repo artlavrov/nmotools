@@ -114,8 +114,12 @@ for i = 0 < C_COMPCOUNT
 			for p = 0 < PLANES
 				get T_PSIZE long MEMORY_FILE2
 				xmath PLANE_SIZE "T_WIDTH * T_HEIGHT"
-				getdstring PLANE PLANE_SIZE MEMORY_FILE2
-				putdstring PLANE PLANE_SIZE MEMORY_FILE4
+
+				#getdstring PLANE PLANE_SIZE MEMORY_FILE2
+				#putdstring PLANE PLANE_SIZE MEMORY_FILE4
+
+				
+
 				next p
 
 			get IMG_SIZE asize MEMORY_FILE4
