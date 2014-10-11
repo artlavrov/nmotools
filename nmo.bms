@@ -93,10 +93,12 @@ for i = 0 < C_COMPCOUNT
 
 		if T_BPP == 32
 			xmath PLANES "T_BPP/8"
+
 			for p = 0 < PLANES
-				get T_PBIND long
-			endif
-			get T_UNK2 long
+				get T_PBIND long MEMORY_FILE2
+				next p
+
+			get T_UNK2 long MEMORY_FILE2
 
 			# save tga
 			log MEMORY_FILE4 0 0
