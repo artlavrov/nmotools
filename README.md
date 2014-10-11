@@ -48,4 +48,9 @@ The first object size is offset-componentsSize-HeaderSize.
 The last object size is objsz - offset + componentsSize + HeaderSize.
 The first object name is always "PARAMETEROPERATION", other names are shifted by one.
 
+Texture object format
+---------------------
+
+
+
 See https://github.com/yesterday/Syberia for textures and other object formats.

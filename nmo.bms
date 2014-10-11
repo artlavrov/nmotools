@@ -65,6 +65,64 @@ for i = 0 < C_COMPCOUNT
 	get C_NAMELEN long MEMORY_FILE1
 	getdstring C_NAME C_NAMELEN MEMORY_FILE1
 
+	set SIZE C_OFS
+	math SIZE -= totalSize
+
+	# write resource file
+	log NAME OFFSET SIZE MEMORY_FILE2
+
+	if TYPE == "TEXTURE"
+		set T_OFS OFFSET
+		goto T_OFS MEMORY_FILE2
+		get T_LENGTH long MEMORY_FILE2
+		get T_UNK0 byte MEMORY_FILE2
+		get T_CID byte MEMORY_FILE2
+		get T_VER short MEMORY_FILE2
+		get T_DATASIZE0 long MEMORY_FILE2
+		get T_UNK1 long MEMORY_FILE2
+		get T_DATASIZE1 long MEMORY_FILE2
+		get T_UNK1 long MEMORY_FILE2
+		get T_BPP long MEMORY_FILE2
+		get T_WIDTH long MEMORY_FILE2
+		get T_HEIGHT long MEMORY_FILE2
+
+		string T_NAME p= "%s_%dx%dx%d.tga" NAME T_WIDTH T_HEIGHT T_BPP
+
+		if T_BPP == 32
+			xmath PLANES "T_BPP/8"
+			for p = 0 < PLANES
+				get T_PBIND long
+			endif
+			get T_UNK2 long
+
+			# save tga
+			log MEMORY_FILE4 0 0
+			put 0 byte MEMORY_FILE4
+			put 0 byte MEMORY_FILE4
+			put 2 byte MEMORY_FILE4
+			put 0 short MEMORY_FILE4
+			put 0 short MEMORY_FILE4
+			put 0 byte MEMORY_FILE4
+			put 0 short MEMORY_FILE4
+			put 0 short MEMORY_FILE4
+			put T_WIDTH short MEMORY_FILE4
+			put T_HEIGHT short MEMORY_FILE4
+			put T_BPP byte MEMORY_FILE4
+			put 0 byte MEMORY_FILE4
+
+			# supposed to convert planes to RGBA array, not implemented yet
+			for p = 0 < PLANES
+				get T_PSIZE long MEMORY_FILE2
+				xmath PLANE_SIZE "T_WIDTH * T_HEIGHT"
+				getdstring PLANE PLANE_SIZE MEMORY_FILE2
+				putdstring PLANE PLANE_SIZE MEMORY_FILE4
+				next p
+
+			get IMG_SIZE asize MEMORY_FILE4
+			log T_NAME 0 IMG_SIZE MEMORY_FILE4
+		endif
+	endif
+
 	if C_TYPE == 1
 		set TYPE string "OBJECT"
 	elif C_TYPE == 2
@@ -95,13 +153,8 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "UNKNOWN"
 	endif
 
-	set SIZE C_OFS
-	math SIZE -= totalSize
-
 	string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
 	put TMP line MEMORY_FILE3
-
-	log NAME OFFSET SIZE MEMORY_FILE2
 
 	string NAME p= "objects/%08d_0x%08x_%s(%d)" i C_ID TYPE C_TYPE
 	string TITLE p= "%s" C_NAME
@@ -114,13 +167,14 @@ for i = 0 < C_COMPCOUNT
 xmath SIZE "C_OBJSZ - C_OFS + C_COMPSIZE + 64"
 string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
 put TMP line MEMORY_FILE3
+# write last resource file
 log NAME OFFSET SIZE MEMORY_FILE2
 
-#get SIZE asize MEMORY_FILE1
-#log "components.bin" 0 SIZE MEMORY_FILE1
+get SIZE asize MEMORY_FILE1
+log "components.bin" 0 SIZE MEMORY_FILE1
 
-#get SIZE asize MEMORY_FILE2
-#log "objects.bin" 0 SIZE MEMORY_FILE2
+get SIZE asize MEMORY_FILE2
+log "objects.bin" 0 SIZE MEMORY_FILE2
 
 get SIZE asize MEMORY_FILE3
 log "objects.txt" 0 SIZE MEMORY_FILE3
