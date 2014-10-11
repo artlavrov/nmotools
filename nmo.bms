@@ -69,7 +69,10 @@ for i = 0 < C_COMPCOUNT
 	math SIZE -= totalSize
 
 	# write resource file
-#	log NAME OFFSET SIZE MEMORY_FILE2
+	# only write up to 256 chunks, they are not supposed to be separate files anyway
+	if i <= 1000
+		log NAME OFFSET SIZE MEMORY_FILE2
+	endif
 
 	if TYPE == "TEXTURE"
 		set T_OFS OFFSET
@@ -111,27 +114,27 @@ for i = 0 < C_COMPCOUNT
 			put 0 byte MEMORY_FILE4
 
 			log MEMORY_FILE5 0 0
+			xmath PLANE_SIZE "T_WIDTH * T_HEIGHT"
 			for p = 0 < PLANES
 				get T_PSIZE long MEMORY_FILE2
-				xmath PLANE_SIZE "T_WIDTH * T_HEIGHT"
 				getdstring PLANE PLANE_SIZE MEMORY_FILE2
-
-				# either save as separate planes, or convert to interleaved (see below)
-				putdstring PLANE PLANE_SIZE MEMORY_FILE4
-#				putdstring PLANE PLANE_SIZE MEMORY_FILE5
+				putdstring PLANE PLANE_SIZE MEMORY_FILE5
 				next p
 
-			# planar to interleaved conversion, really slow, commented out for a while
-#			for y = 0 < T_HEIGHT
-#				for x = 0 < T_WIDTH
-#					for p = 0 < PLANES
-#						xmath OFS "p * PLANE_SIZE + x + y*T_WIDTH"
-#						goto OFS MEMORY_FILE5
-#						get C byte MEMORY_FILE5
-#						put C byte MEMORY_FILE4
-#						next p
-#					next x
-#				next y
+			# planar to RGBA conversion, really slow
+			set DX 0
+			for y = 0 < T_HEIGHT
+				for x = 0 < T_WIDTH
+					set OFS DX
+					for p = 0 < PLANES
+						goto OFS MEMORY_FILE5
+						get C byte MEMORY_FILE5
+						put C byte MEMORY_FILE4
+						math OFS += PLANE_SIZE
+						next p
+					math DX += 1
+					next x
+				next y
 
 			get IMG_SIZE asize MEMORY_FILE4
 			log T_NAME 0 IMG_SIZE MEMORY_FILE4
