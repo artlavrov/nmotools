@@ -6,15 +6,18 @@ nmotools
 nmo file format specification
 -----------------------------
 
-The first 64 (HeaderSize) bytes contain the header
+The first 64 (HeaderSize) bytes contain the header.
 
 * Bytes 0..7: "Nemo Fi" signature, including trailing zero
-* Bytes 8..63: 14 int32 fields - date, crc, plugin1, plugin2, flags, int32 compcsz, objcsz, objsz, addpath, int32 componentsCount, objectsCount, zero, version, componentsSize
-* Bytes 64..64+compcsz: componentRecords * componentCount (may be compressed)
-* Bytes 64+compcsz...64+compcsz+objcsz: objects binary data (may be compressed)
+* Bytes 8..63: 14 int32 fields - date, crc, plugin1, plugin2, flags, compcsz, objcsz, objsz, addpath, componentsCount, objectsCount, zero, version, componentsSize
 
 In the end there is compcsz bytes of component records (componentsCount records). If componentsSize != compcsz, those compczs bytes are zlib-compressed.
+
+* Bytes 64..64+compcsz: componentRecords * componentsCount (may be compressed)
+
 Directly after this there is binary data containing objects. If objcsz != objsz, next objcsz bytes are zlib-compressed.
+
+* Bytes 64+compcsz...64+compcsz+objcsz: objects binary data (may be compressed)
 
 Component record format
 -----------------------
