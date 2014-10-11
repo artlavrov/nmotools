@@ -10,7 +10,7 @@ The first 64 (HeaderSize) bytes contain the header
 
 * Bytes 0..7: "Nemo Fi" signature, including trailing zero
 * Bytes 8..63: 14 int32 fields - date, crc, plugin1, plugin2, flags, int32 compcsz, objcsz, objsz, addpath, int32 componentsCount, objectsCount, zero, version, componentsSize
-* Bytes 64..64+compcsz: componentRecords [componentCount] (may be compressed)
+* Bytes 64..64+compcsz: componentRecords * componentCount (may be compressed)
 * Bytes 64+compcsz...64+compcsz+objcsz: objects binary data (may be compressed)
 
 In the end there is compcsz bytes of component records (componentsCount records). If componentsSize != compcsz, those compczs bytes are zlib-compressed.
