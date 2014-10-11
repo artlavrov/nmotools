@@ -3,27 +3,22 @@ nmotools
 
 3DVIA .nmo assets extractor
 
-.nmo file format
-----------------
+.nmo binary file format specification
+-------------------------------------
 
-1) 64-byte header, including "Nemo Fi" signature:
+The first 64 bytes contain the header
 
-* 8 bytes, string "Nemo Fi"
-* int32 date, crc, plugin1, plugin2, flags
-* int32 compcsz, objcsz, objsz, addpath
-* int32 componentsCount, objectsCount, zero, version, componentsSize
+* Bytes 0..7: "Nemo Fi" signature, including trailing zero
+* Bytes 8..63: 14 int32 fields - date, crc, plugin1, plugin2, flags, int32 compcsz, objcsz, objsz, addpath, int32 componentsCount, objectsCount, zero, version, componentsSize
 
-2) Components
+Directly after this data there is compcsz bytes of component records (componentsCount records). If componentsSize!=compcsz, those compczs bytes are zlib-compressed.
 
-if componentsSize!=compcsz, next compczs bytes are compressed (zlib)
+Component record format
+-----------------------
 
-* int32 id, componentType, offset, nameLength
-* string name (nameLength bytes)
+* Bytes 0..16: 4 int32 fields - id, componentType, offset, nameLength
+* Bytes 16..16+nameLength - string name (including trailing zero)
 
-3) Objects
+Directly after this there is binary data containing objects. If objcsz!=objsz, next objcsz bytes are zlib-compressed.
 
-if objcsz!=objsz, next objcsz bytes are compressed (zlib)
-
-To be continued.
-
-See https://github.com/yesterday/Syberia for details.
+See https://github.com/yesterday/Syberia for details (the oldsource directory).
