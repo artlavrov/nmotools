@@ -52,9 +52,9 @@ so, all record names are off by one.
 Texture object (31)
 -------------------
 
-* Bytes 0..43: 11 int32 fields - length, tag, classID, version, dataSizeInWords0, unk0, dataSizeInWords1, unk1, BPP, width, height
-* Bytes 44..44+BPP/8*4: int32 planesBindes [BPP/8]
-* Bytes 44+BPP/8*4..length: colorPlanes [BPP/8] - int32 size, raw color plane bytes [width*height]
+* Bytes 0..43: 11 int32 fields - length, tag, classID, version, dataSizeInWords0, unk0, dataSizeInWords1, unk1, BPP (number of planes are BPP/8), width, height
+* Bytes 44..44+planes*4: int32 planesBindes * planes
+* Bytes 44+planes*4..length: colorPlanes * planes - int32 size, raw color plane bytes [width*height]
 
 See https://github.com/yesterday/Syberia for other objects.
 
