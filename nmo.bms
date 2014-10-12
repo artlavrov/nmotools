@@ -68,10 +68,9 @@ for i = 0 < C_COMPCOUNT
 	set SIZE C_OFS
 	math SIZE -= totalSize
 
-	# write resource file
 	# only write up to 256 chunks, they are not supposed to be separate files anyway
-	if i <= 1000
-		log NAME OFFSET SIZE MEMORY_FILE2
+	if i <= 256
+		log NAME OFFSET SIZE MEMORY_FILE2 # write resource file
 	endif
 
 	if TYPE == "TEXTURE"
@@ -91,7 +90,9 @@ for i = 0 < C_COMPCOUNT
 
 		string T_NAME p= "%s_%dx%dx%d.tga" NAME T_WIDTH T_HEIGHT T_BPP
 
-		if T_BPP == 32
+		print %T_BPP%
+
+		if T_BPP >= 8 and T_BPP <= 32
 			xmath PLANES "T_BPP/8"
 
 			for p = 0 < PLANES
@@ -183,8 +184,7 @@ for i = 0 < C_COMPCOUNT
 xmath SIZE "C_OBJSZ - C_OFS + C_COMPSIZE + 64"
 string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
 put TMP line MEMORY_FILE3
-# write last resource file
-log NAME OFFSET SIZE MEMORY_FILE2
+log NAME OFFSET SIZE MEMORY_FILE2 # write resource file
 
 get SIZE asize MEMORY_FILE1
 log "components.bin" 0 SIZE MEMORY_FILE1
