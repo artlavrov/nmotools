@@ -46,7 +46,7 @@ else
 	log MEMORY_FILE2 OFFSET C_OBJSZ
 endif
 
-set FNAME "decompressed.nmo"
+set FNAME "decomp.nmo"
 
 log FNAME 0 64
 
