@@ -28,9 +28,6 @@ get C_ZERO long
 get C_VERSION long
 get C_COMPSZ long
 
-string TMP p= "crc: 0x%08x objectCount: %d componentsCount: %d" C_CRC C_OBJCOUNT C_COMPCOUNT
-print "%TMP%"
-
 comtype zlib
 
 set OFFSET 64
@@ -280,7 +277,7 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "UNKNOWN"
 	endif
 
-	string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
+	string TMP p= "%8d %8d %-56s \"%s\"" OFFSET SIZE NAME (TITLE)
 	put TMP line MEMORY_FILE3
 
 	string NAME p= "objects/%08d_0x%08x_%02d_%s" i C_ID C_TYPE TYPE
@@ -295,7 +292,7 @@ for i = 0 < C_COMPCOUNT
 	next i
 
 xmath SIZE "C_OBJSZ - C_OFS + C_COMPSZ + 64"
-string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
+string TMP p= "%8d %8d %-56s \"%s\"" OFFSET SIZE NAME (TITLE)
 put TMP line MEMORY_FILE3
 # write last resource file
 if i <= 1024
