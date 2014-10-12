@@ -26,14 +26,14 @@ get C_COMPCOUNT long
 get C_OBJCOUNT long
 get C_ZERO long
 get C_VERSION long
-get C_COMPSIZE long
+get C_COMPSZ long
 
 comtype zlib
 
 set OFFSET 64
 
-if C_COMPCSZ != C_COMPSIZE
-	clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSIZE
+if C_COMPCSZ != C_COMPSZ
+	clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSZ
 else
 	log MEMORY_FILE1 OFFSET C_COMPSIZE
 endif
@@ -46,9 +46,31 @@ else
 	log MEMORY_FILE2 OFFSET C_OBJSZ
 endif
 
+# write uncompressed header
+log MEMORY_FILE3 0 0
+
+putct SIG string 0 MEMORY_FILE3
+put C_DATE long MEMORY_FILE3
+put C_CRC long MEMORY_FILE3
+put C_PLUGIN1 long MEMORY_FILE3
+put C_PLUGIN2 long MEMORY_FILE3
+put C_FLAGS long MEMORY_FILE3
+
+put C_COMPSZ long MEMORY_FILE3
+put C_OBJSZ long MEMORY_FILE3
+put C_OBJSZ long MEMORY_FILE3
+put C_ADDPATH long MEMORY_FILE3
+
+put C_COMPCOUNT long MEMORY_FILE3
+put C_OBJCOUNT long MEMORY_FILE3
+put C_ZERO long MEMORY_FILE3
+put C_VERSION long MEMORY_FILE3
+put C_COMPSZ long MEMORY_FILE3
+
 set FNAME "decomp.nmo"
 
-log FNAME 0 64
+get SIZE asize MEMORY_FILE3
+log FNAME 0 SIZE MEMORY_FILE3
 
 append
 
