@@ -70,7 +70,7 @@ for i = 0 < C_COMPCOUNT
 
 	# only write up to 1024 files, chunks were not supposed as files anyway
 	if i <= 1024
-		log NAME OFFSET SIZE MEMORY_FILE2 # write resource file
+		log NAME OFFSET SIZE MEMORY_FILE2
 	endif
 
 	if TYPE == "TEXTURE"
@@ -299,7 +299,7 @@ string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
 put TMP line MEMORY_FILE3
 # write last resource file
 if i <= 1024
-	log NAME OFFSET SIZE MEMORY_FILE2 # write resource file
+	log NAME OFFSET SIZE MEMORY_FILE2
 endif
 
 get SIZE asize MEMORY_FILE1
