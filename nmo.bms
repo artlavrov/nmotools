@@ -68,8 +68,8 @@ for i = 0 < C_COMPCOUNT
 	set SIZE C_OFS
 	math SIZE -= totalSize
 
-	# only write up to 256 chunks, they are not supposed to be separate files anyway
-	if i <= 256
+	# only write up to 1024 files, chunks were not supposed as files anyway
+	if i <= 1024
 		log NAME OFFSET SIZE MEMORY_FILE2 # write resource file
 	endif
 
