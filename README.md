@@ -3,8 +3,8 @@ nmotools
 
 3DVIA .nmo assets extractor
 
-nmo file format specification
------------------------------
+cmo / nmo file format specification
+-----------------------------------
 
 The first 64 (HeaderSize) bytes contain the header.
 
