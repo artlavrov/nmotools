@@ -54,6 +54,7 @@ log MEMORY_FILE3 0 0
 set totalSize C_COMPSIZE
 math totalSize += 64
 set OFFSET 0
+set R_OFS 0
 string NAME p= "objects/%08d_0x%08x_%s(%d)" 0 0 "PARAMETEROPERATION" 0
 set TITLE = ""
 
@@ -168,7 +169,7 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "UNKNOWN"
 	endif
 
-	string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
+	string TMP p= "%8d %8d %8d %s \"%s\"" R_OFS OFFSET SIZE NAME (TITLE)
 	put TMP line MEMORY_FILE3
 
 	string NAME p= "objects/%08d_0x%08x_%s(%d)" i C_ID TYPE C_TYPE
@@ -176,13 +177,14 @@ for i = 0 < C_COMPCOUNT
 
 	math OFFSET += SIZE
 	math totalSize += SIZE
+	set R_OFS C_OFS
 
 	next i
 
 xmath SIZE "C_OBJSZ - C_OFS + C_COMPSIZE + 64"
-string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
+string TMP p= "%8d %8d %8d %s \"%s\"" R_OFS OFFSET SIZE NAME (TITLE)
 put TMP line MEMORY_FILE3
-log NAME OFFSET SIZE MEMORY_FILE2 # write resource file
+log NAME OFFSET SIZE MEMORY_FILE2 # write last resource file
 
 get SIZE asize MEMORY_FILE1
 log "components.bin" 0 SIZE MEMORY_FILE1
