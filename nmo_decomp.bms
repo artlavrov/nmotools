@@ -67,7 +67,10 @@ put C_ZERO long MEMORY_FILE3
 put C_VERSION long MEMORY_FILE3
 put C_COMPSZ long MEMORY_FILE3
 
-set FNAME "decomp.nmo"
+get BASE basename
+get EXT extension
+
+string FNAME p= "%s_unpacked.%s" BASE EXT
 
 get SIZE asize MEMORY_FILE3
 log FNAME 0 SIZE MEMORY_FILE3
