@@ -54,7 +54,6 @@ log MEMORY_FILE3 0 0
 set totalSize C_COMPSIZE
 math totalSize += 64
 set OFFSET 0
-set ORIG_OFS 0
 string NAME p= "objects/%08d_0x%08x_%02d_%s" 0 0 0 "PARAMETEROPERATION"
 set TITLE = ""
 
@@ -281,7 +280,7 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "UNKNOWN"
 	endif
 
-	string TMP p= "%8d %8d %8d %s \"%s\"" OFFSET SIZE ORIG_OFS NAME (TITLE)
+	string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
 	put TMP line MEMORY_FILE3
 
 	string NAME p= "objects/%08d_0x%08x_%02d_%s" i C_ID C_TYPE TYPE
@@ -292,12 +291,11 @@ for i = 0 < C_COMPCOUNT
 
 	math OFFSET += SIZE
 	math totalSize += SIZE
-	set ORIG_OFS C_OFS
 
 	next i
 
 xmath SIZE "C_OBJSZ - C_OFS + C_COMPSIZE + 64"
-string TMP p= "%8d %8d %8d %s \"%s\"" OFFSET SIZE ORIG_OFS NAME (TITLE)
+string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
 put TMP line MEMORY_FILE3
 # write last resource file
 if i <= 1024
