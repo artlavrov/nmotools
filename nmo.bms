@@ -89,7 +89,7 @@ for i = 0 < C_COMPCOUNT
 		get T_WIDTH long MEMORY_FILE2
 		get T_HEIGHT long MEMORY_FILE2
 
-		string T_NAME p= "%s_%dx%dx%d.tga" NAME T_WIDTH T_HEIGHT T_BPP
+		string T_NAME p= "textures/%08d_0x%08x_%dx%dx%d.tga" INDEX ID T_WIDTH T_HEIGHT T_BPP
 
 		if T_BPP >= 8 and T_BPP <= 32
 			xmath PLANES "T_BPP/8"
@@ -287,6 +287,9 @@ for i = 0 < C_COMPCOUNT
 	string NAME p= "objects/%08d_0x%08x_%02d_%s" i C_ID C_TYPE TYPE
 	string TITLE p= "%s" C_NAME
 
+	set INDEX i
+	set ID C_ID
+
 	math OFFSET += SIZE
 	math totalSize += SIZE
 	set ORIG_OFS C_OFS
@@ -296,7 +299,10 @@ for i = 0 < C_COMPCOUNT
 xmath SIZE "C_OBJSZ - C_OFS + C_COMPSIZE + 64"
 string TMP p= "%8d %8d %8d %s \"%s\"" OFFSET SIZE ORIG_OFS NAME (TITLE)
 put TMP line MEMORY_FILE3
-log NAME OFFSET SIZE MEMORY_FILE2 # write last resource file
+# write last resource file
+if i <= 1024
+	log NAME OFFSET SIZE MEMORY_FILE2 # write resource file
+endif
 
 get SIZE asize MEMORY_FILE1
 log "components.bin" 0 SIZE MEMORY_FILE1
