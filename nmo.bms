@@ -145,26 +145,138 @@ for i = 0 < C_COMPCOUNT
 		set TYPE string "PARAMETERIN"
 	elif C_TYPE == 3
 		set TYPE string "PARAMETEROUT"
+	elif C_TYPE == 4
+		set TYPE string "PARAMETEROPERATION"
+	elif C_TYPE == 5
+		set TYPE string "STATE"
 	elif C_TYPE == 6
 		set TYPE string "BEHAVIORLINK"
 	elif C_TYPE == 8
 		set TYPE string "BEHAVIOR"
 	elif C_TYPE == 9
 		set TYPE string "BEHAVIORIO"
+	elif C_TYPE == 10
+		set TYPE string "SCENE"
+	elif C_TYPE == 11
+		set TYPE string "SCENEOBJECT"
+	elif C_TYPE == 12
+		set TYPE string "RENDERCONTEXT"
+	elif C_TYPE == 13
+		set TYPE string "KINEMATICCHAIN"
 	elif C_TYPE == 15
 		set TYPE string "OBJECTANIMATION"
+	elif C_TYPE == 16
+		set TYPE string "ANIMATION"
+	elif C_TYPE == 18
+		set TYPE string "KEYEDANIMATION"
+	elif C_TYPE == 19
+		set TYPE string "BEOBJECT"
+	elif C_TYPE == 20
+		set TYPE string "SYNCHRO"
+	elif C_TYPE == 21
+		set TYPE string "LEVEL"
+	elif C_TYPE == 22
+		set TYPE string "PLACE"
 	elif C_TYPE == 23
 		set TYPE string "GROUP"
+	elif C_TYPE == 24
+		set TYPE string "SOUND"
+	elif C_TYPE == 25
+		set TYPE string "WAVESOUND"
+	elif C_TYPE == 26
+		set TYPE string "MIDISOUND"
+	elif C_TYPE == 27
+		set TYPE string "ENTITY_2D"
+	elif C_TYPE == 28
+		set TYPE string "SPRITE"
+	elif C_TYPE == 29
+		set TYPE string "SPRITETEXT"
+	elif C_TYPE == 30
+		set TYPE string "MATERIAL"
 	elif C_TYPE == 31
 		set TYPE string "TEXTURE"
+	elif C_TYPE == 32
+		set TYPE string "MESH"
 	elif C_TYPE == 33
 		set TYPE string "ENTITY_3D"
+	elif C_TYPE == 34
+		set TYPE string "CAMERA"
+	elif C_TYPE == 35
+		set TYPE string "TARGETCAMERA"
+	elif C_TYPE == 36
+		set TYPE string "CURVEPOINT"
+	elif C_TYPE == 37
+		set TYPE string "SPRITE3D"
+	elif C_TYPE == 38
+		set TYPE string "LIGHT"
+	elif C_TYPE == 39
+		set TYPE string "TARGETLIGHT"
+	elif C_TYPE == 40
+		set TYPE string "CHARACTER"
+	elif C_TYPE == 41
+		set TYPE string "OBJECT_3D"
+	elif C_TYPE == 42
+		set TYPE string "BODYPART"
+	elif C_TYPE == 43
+		set TYPE string "CURVE"
 	elif C_TYPE == 45
 		set TYPE string "PARAMETERLOCAL"
+	elif C_TYPE == 46
+		set TYPE string "PARAMETER"
+	elif C_TYPE == 47
+		set TYPE string "RENDEROBJECT"
 	elif C_TYPE == 48
 		set TYPE string "INTERFACEOBJECTMANAGER"
+	elif C_TYPE == 49
+		set TYPE string "CRITICALSECTION"
+	elif C_TYPE == 50
+		set TYPE string "GRID"
+	elif C_TYPE == 51
+		set TYPE string "LAYER"
 	elif C_TYPE == 52
 		set TYPE string "DATAARRAY"
+	elif C_TYPE == 53
+		set TYPE string "PATCHMESH"
+	elif C_TYPE == 54
+		set TYPE string "PROGRESSIVEMESH"
+	elif C_TYPE == 55
+		set TYPE string "PARAMETERVARIABLE"
+	elif C_TYPE == 56
+		set TYPE string "POINTCLOUD_3D"
+	elif C_TYPE == 57
+		set TYPE string "VIDEO"
+	elif C_TYPE == 58
+		set TYPE string "MAXCLASSID"
+	elif C_TYPE == 80
+		set TYPE string "OBJECTARRAY"
+	elif C_TYPE == 81
+		set TYPE string "SCENEOBJECTDESC"
+	elif C_TYPE == 82
+		set TYPE string "ATTRIBUTEMANAGER"
+	elif C_TYPE == 83
+		set TYPE string "MESSAGEMANAGER"
+	elif C_TYPE == 84
+		set TYPE string "COLLISIONMANAGER"
+	elif C_TYPE == 85
+		set TYPE string "OBJECTMANAGER"
+	elif C_TYPE == 86
+		set TYPE string "FLOORMANAGER"
+	elif C_TYPE == 87
+		set TYPE string "RENDERMANAGER"
+	elif C_TYPE == 88
+		set TYPE string "BEHAVIORMANAGER"
+	elif C_TYPE == 89
+		set TYPE string "INPUTMANAGER"
+	elif C_TYPE == 90
+		set TYPE string "PARAMETERMANAGER"
+	elif C_TYPE == 91
+		set TYPE string "GRIDMANAGER"
+	elif C_TYPE == 92
+		set TYPE string "SOUNDMANAGER"
+	elif C_TYPE == 93
+		set TYPE string "TIMEMANAGER"
+	elif C_TYPE == 94
+		set TYPE string "VIDEOMANAGER"
 	else
 		set TYPE string "UNKNOWN"
 	endif
