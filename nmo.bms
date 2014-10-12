@@ -26,7 +26,7 @@ get C_COMPCOUNT long
 get C_OBJCOUNT long
 get C_ZERO long
 get C_VERSION long
-get C_COMPSIZE long
+get C_COMPSZ long
 
 string TMP p= "crc: 0x%08x objectCount: %d componentsCount: %d" C_CRC C_OBJCOUNT C_COMPCOUNT
 print "%TMP%"
@@ -35,10 +35,10 @@ comtype zlib
 
 set OFFSET 64
 
-if C_COMPCSZ != C_COMPSIZE
-	clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSIZE
+if C_COMPCSZ != C_COMPSZ
+	clog MEMORY_FILE1 OFFSET C_COMPCSZ C_COMPSZ
 else
-	log MEMORY_FILE1 OFFSET C_COMPSIZE
+	log MEMORY_FILE1 OFFSET C_COMPSZ
 endif
 
 math OFFSET += C_COMPCSZ
@@ -51,7 +51,7 @@ endif
 
 log MEMORY_FILE3 0 0
 
-set totalSize C_COMPSIZE
+set totalSize C_COMPSZ
 math totalSize += 64
 set OFFSET 0
 string NAME p= "objects/%08d_0x%08x_%02d_%s" 0 0 0 "PARAMETEROPERATION"
@@ -294,7 +294,7 @@ for i = 0 < C_COMPCOUNT
 
 	next i
 
-xmath SIZE "C_OBJSZ - C_OFS + C_COMPSIZE + 64"
+xmath SIZE "C_OBJSZ - C_OFS + C_COMPSZ + 64"
 string TMP p= "%8d %8d %s \"%s\"" OFFSET SIZE NAME (TITLE)
 put TMP line MEMORY_FILE3
 # write last resource file
