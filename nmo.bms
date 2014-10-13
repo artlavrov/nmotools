@@ -66,9 +66,9 @@ for i = 0 < C_COMPCOUNT
 	math SIZE -= totalSize
 
 	# only write up to 1024 files, chunks were not supposed as files anyway
-	if i <= 1024
-		log NAME OFFSET SIZE MEMORY_FILE2
-	endif
+#	if i <= 1024
+#		log NAME OFFSET SIZE MEMORY_FILE2
+#	endif
 
 	if TYPE == "TEXTURE"
 		set T_OFS OFFSET
@@ -116,19 +116,20 @@ for i = 0 < C_COMPCOUNT
 			for p = 0 < PLANES
 				get T_PSIZE long MEMORY_FILE2
 				getdstring PLANE PLANE_SIZE MEMORY_FILE2
-				putdstring PLANE PLANE_SIZE MEMORY_FILE5
+#				putdstring PLANE PLANE_SIZE MEMORY_FILE5
+				putdstring PLANE PLANE_SIZE MEMORY_FILE4
 				next p
 
 			# planar to RGBA conversion, really slow
-			for k = 0 < PLANE_SIZE
-				set OFS k
-				for p = 0 < PLANES
-					goto OFS MEMORY_FILE5
-					get C byte MEMORY_FILE5
-					put C byte MEMORY_FILE4
-					math OFS += PLANE_SIZE
-					next p
-				next k
+#			for k = 0 < PLANE_SIZE
+#				set OFS k
+#				for p = 0 < PLANES
+#					goto OFS MEMORY_FILE5
+#					get C byte MEMORY_FILE5
+#					put C byte MEMORY_FILE4
+#					math OFS += PLANE_SIZE
+#					next p
+#				next k
 
 			get IMG_SIZE asize MEMORY_FILE4
 			log T_NAME 0 IMG_SIZE MEMORY_FILE4
@@ -295,16 +296,16 @@ xmath SIZE "C_OBJSZ - C_OFS + C_COMPSZ + 64"
 string TMP p= "%8d %8d %-56s \"%s\"" OFFSET SIZE NAME (TITLE)
 put TMP line MEMORY_FILE3
 # write last resource file
-if i <= 1024
-	log NAME OFFSET SIZE MEMORY_FILE2
-endif
+#if i <= 1024
+#	log NAME OFFSET SIZE MEMORY_FILE2
+#endif
 
 get SIZE asize MEMORY_FILE1
-log "components.bin" 0 SIZE MEMORY_FILE1
+log "bin/components.bin" 0 SIZE MEMORY_FILE1
 
 get SIZE asize MEMORY_FILE2
-log "objects.bin" 0 SIZE MEMORY_FILE2
+log "bin/objects.bin" 0 SIZE MEMORY_FILE2
 
 get SIZE asize MEMORY_FILE3
-log "objects.txt" 0 SIZE MEMORY_FILE3
+log "bin/objects.txt" 0 SIZE MEMORY_FILE3
 
