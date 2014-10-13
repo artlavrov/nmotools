@@ -60,5 +60,5 @@ Texture object (31)
 * Bytes 36+planes*4..length: colorPlanes (int32 size, width*height bytes ) * planes
 
 See https://github.com/yesterday/Syberia for other objects.
-See https://github.com/artlavrov/dormin about .nmo files with 'xff' signature in the beginning.
 
+See https://github.com/artlavrov/dormin about .nmo files with 'xff' signature in the beginning.
