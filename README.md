@@ -3,6 +3,10 @@ nmotools
 
 3DVIA .nmo assets extractor
 
+This project is for files with a "Nemo Fi" signature in the beginning.
+
+See https://github.com/artlavrov/dormin about .nmo files with "xff" signature.
+
 cmo / nmo file format specification
 -----------------------------------
 
@@ -61,4 +65,3 @@ Texture object (31)
 
 See https://github.com/yesterday/Syberia for other objects.
 
-See https://github.com/artlavrov/dormin about .nmo files with 'xff' signature in the beginning.
